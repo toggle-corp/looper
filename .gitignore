@@ -1,0 +1,6 @@
+*.tmp
+*.swp
+*~
+node_modules/
+coverage/
+build/
