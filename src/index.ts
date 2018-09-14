@@ -16,15 +16,14 @@ const isAlmostZero = (foo: number) => (
 )
 
 class Timer {
-    fps: RequiredTimerProps['fps'];
-    timePerFrame: number;
-    renderFunction: RequiredTimerProps['render'];
-    updateFunction: RequiredTimerProps['update'];
-    requestAnimationFrame: RequiredTimerProps['requestAnimationFrame'];
+    private fps: RequiredTimerProps['fps'];
+    private timePerFrame: number;
+    private renderFunction: RequiredTimerProps['render'];
+    private updateFunction: RequiredTimerProps['update'];
+    private requestAnimationFrame: RequiredTimerProps['requestAnimationFrame'];
 
-    nextFrameRequest?: number;
-    lastTime?: number;
-    acc: number;
+    private lastTime?: number;
+    private acc: number;
 
     constructor(props: TimerProps) {
         this.renderFunction = props.render;
@@ -41,25 +40,25 @@ class Timer {
         this.requestNextFrame();
     }
 
-    requestNextFrame = () => {
-        this.nextFrameRequest = this.requestAnimationFrame(this.handleNewFrame);
+    private requestNextFrame = () => {
+        this.requestAnimationFrame(this.handleNewFrame);
     }
 
-    handleNewFrame = (currentTime: number) => {
+    private handleNewFrame = (currentTime: number) => {
         this.renderFunction();
         this.tick(currentTime);
         this.requestNextFrame();
     }
 
     // NOTE: ignoring small deviations that may accumulate
-    accumulate = (dt: number) => {
+    private accumulate = (dt: number) => {
         this.acc += dt;
         if (isAlmostZero(this.acc - this.timePerFrame)) {
             this.acc = this.timePerFrame;
         }
     }
 
-    tick = (currentTime: number) => {
+    private tick = (currentTime: number) => {
         if (this.lastTime === undefined) {
             this.lastTime = currentTime;
             return;
